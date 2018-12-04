@@ -1,6 +1,6 @@
 from datetime import datetime
 
-INFIL = '../p4_test.txt'
+INFIL = '../p4.txt'
 def sleepy_bois(tstamp_act):
 	guards = {}
 	er = 0
@@ -38,21 +38,23 @@ def most_sleepy_boi(guards):
 	for k,v in guards.items():
 		if (v > max_sleep):
 			sleepy_boi_id = k
+			max_sleep = v
 	return(sleepy_boi_id)
 
 def most_asleep_min(sched, sleeper_id):#, sleepy_guard):
 	times = []
 	for entry in sched:
 		if entry[1][0] == 'G':
-			cont = 1
 			if entry[1][entry[1].index('#'):entry[1].index('b') - 1] == sleeper_id:
+				cont = 1
 				try:
 					while(sched[sched.index(entry) + cont][1][0] != 'G'):
-						wake_up = sched[sched.index(entry) + 2][0].minute
-						sleep = sched[sched.index(entry) + 1][0].minute
-						for i in range(sleep, wake_up):
-							times.append(i)
-						cont += 2
+						if (sched[sched.index(entry) + cont][1][0] == 'f'):
+							wake_up = sched[sched.index(entry) + cont + 1][0].minute
+							sleep = sched[sched.index(entry) + cont][0].minute
+							for i in range(sleep, wake_up):
+								times.append(i)
+							cont += 2
 				except IndexError:
 					pass
 	# return times
@@ -60,4 +62,4 @@ def most_asleep_min(sched, sleeper_id):#, sleepy_guard):
 sleeper_id = int((most_sleepy_boi(sleepy_bois((sort_sched(INFIL)))))[1::])
 sleeper_min = (most_asleep_min(sort_sched(INFIL), most_sleepy_boi(sleepy_bois((sort_sched(INFIL))))))
 print(sleeper_id * sleeper_min)
-# print(sleeper_min)
+# print(sleeper_id, sleeper_min)
