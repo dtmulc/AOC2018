@@ -78,4 +78,6 @@ def cloth2(infil):
 	# for block in not_overlap:
 	# 	if(block[0] != 0): print(block[1])
 
-cloth2('../p3.txt')
+cloth('../p3.txt')
+#cloth2('../p3.txt')
+#part two didnt work quite right
